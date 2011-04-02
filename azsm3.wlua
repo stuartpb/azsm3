@@ -145,6 +145,29 @@ local dlg = iup.dialog{
         ctrl:valspin("DAYTIME_MODIFIER_HARDCORE",0.1,1),
       }--vbox
     },--Day/Night Cycle
+    {"Scoring",
+      iup.vbox{
+        iup.hbox{
+          iup.label{title="Human territory score:"},
+          ctrl:spin("HUMAN_TERRITORYSCORE",0,10000),
+        },
+        iup.hbox{
+          iup.label{title="Zombie territory score per outbreak level:"},
+          ctrl:spin("GAME_ZOMBIETERRITORY_MULTIPLIER",0,10000),
+        },
+        iup.label{title="Game victory points:"},
+        iup.hbox{
+          iup.label{title="Short:"},
+          ctrl:spin("VICTORYPOINTS_SHORT",0,100000),
+          iup.label{title="Default:"},
+          ctrl:spin("DEFAULTVICTORYPOINTS",0,100000),
+          iup.label{title="Long:"},
+          ctrl:spin("VICTORYPOINTS_LONG",0,100000),
+        },
+
+      }--vbox
+    },--Scoring
+
   }
 }
 
