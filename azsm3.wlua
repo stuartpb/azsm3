@@ -9,7 +9,7 @@ local vars = manifestio.read()
 local ctrl = azsm3controls.new(vars)
 
 local function tabpairs(t)
-  local targs={}
+  local targs={multiline="yes"}
   for i=1, #t do
     targs[i]=t[i][2]
     targs[string.format("TABTITLE%i", i-1)] = t[i][1]
@@ -19,7 +19,7 @@ end
 
 local dlg = iup.dialog{
   title="Atom Zombie Smasher, MMM!",
-  rastersize="400x600";
+  rastersize="400x640", shrink="yes";
   tabpairs{
     {"General",
       iup.vbox{
@@ -29,8 +29,8 @@ local dlg = iup.dialog{
         ctrl:text"AUTHOR",
         iup.label{title="Description:"},
         ctrl:description"DESCRIPTION"
-      }
-    },
+      }--vbox
+    },--General
     {"City/World Generation",
       iup.vbox{
         iup.label{title="City width:"},
@@ -109,9 +109,42 @@ local dlg = iup.dialog{
         ctrl:color"ZOMBIEBLOODCOLOR_%s",
         iup.label{title="Zombie animated bloodspurt color:"},
         ctrl:color"ZOMBIEBLOODSPURTCOLOR_%s",
-
-      }
-    },
+      }--vbox
+    },--People Stats
+    {"Zombie Spawning",
+      iup.vbox{
+        iup.label{title="Seconds between spawn waves:"},
+        ctrl:valspin("ZED_SPAWNTIME",0,10),
+        iup.hbox{
+          iup.label{title="Waves to spawn:"},
+          ctrl:spin("ZED_SPAWNWAVES"),
+          iup.label{title="Zed per wave:"},
+          ctrl:spin("ZED_SPAWNAMOUNT"),
+        },
+        iup.label{title="Seconds before zombie spawning begins:"},
+        ctrl:valspin("ZED_INITIALDELAY",0,10),
+        iup.label{title="Maximum number of Super Zombies:"},
+        ctrl:spin("SUPERZOMBIE_MAX"),
+        iup.label{title="Seconds before each Super Zombie spawn wave:"},
+        ctrl:valspin("SUPERZOMBIE_TIMER",0,10),
+        iup.label{title="Chance of zombies spawning in the middle of the city:"},
+        ctrl:valspin("ALTERNATE_SPAWN_CHANCE",0,100),
+        iup.label{title="Alternate zombie count:"},
+        ctrl:minmax("ALTERNATE_SPAWN_AMOUNT_%s"),
+      }--vbox
+    },--Zombie Spawning
+    {"Day/Night Cycle",
+      iup.vbox{
+        iup.hbox{
+          iup.label{title="Default seconds in one day:"},
+          ctrl:spin("DAYTIME_SECONDS"),
+        },
+        iup.label{title="Casual duration multiplier:"},
+        ctrl:valspin("DAYTIME_MODIFIER_CASUAL",1,4),
+        iup.label{title="Hardcore duration multiplier:"},
+        ctrl:valspin("DAYTIME_MODIFIER_HARDCORE",0.1,1),
+      }--vbox
+    },--Day/Night Cycle
   }
 }
 
