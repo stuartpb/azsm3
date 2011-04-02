@@ -79,8 +79,18 @@ local dlg = iup.dialog{
         ctrl:color"GEOUNCLAIMEDCOLOR_%s",
         iup.label{title="Zeppelin color:"},
         ctrl:color"GEOZEPPELINCOLOR_%s",
+      }--vbox
+    },--City/World Generation
+    {"People Stats",
+      iup.vbox{
+        iup.label{title="Human wander move speed:"},
+        ctrl:speed("HUMANSPEED",0,20),
+        iup.label{title="Human evacuation run speed:"},
+        ctrl:speed("HUMANEVACUATIONSPEED",0,20),
+        iup.label{title="Human run-away-from-zombies panic speed:"},
+        ctrl:speed("HUMANPANICSPEED",0,20),
       }
-    }
+    },
   }
 }
 

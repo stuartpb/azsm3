@@ -68,6 +68,29 @@ function azsm3c:multilevel(format, levels, low, high)
   return iup.hbox(args)
 end
 
+function azsm3c:valspin(var, low, high)
+  local vars=self.vars
+  local function update(other)
+    return function(self)
+      vars[var]=tonumber(self.value)
+      other.value=self.value
+    end
+  end
+  local val=iup.val{tip=var,expand="horizontal",
+    value=vars[var], min=low, max=high}
+  local spin=iup.text{
+    spin="yes", spinmax=low, spinmin=high,
+    tip=var, value=vars[var], --spinvalue=vars[var],
+    action=update(val), spin_cb=update(val)
+  }
+  val.valuechanged_cb=update(spin)
+  return iup.hbox{val,spin}
+end
+
+function azsm3c:speed(var, low, high)
+  return self:valspin(var, low, high)
+end
+
 function azsm3c:color(format)
   local vars=self.vars
   local function varchan(channel)
