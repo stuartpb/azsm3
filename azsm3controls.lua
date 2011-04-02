@@ -34,6 +34,7 @@ function azsm3c:spin(var, max, min)
 
   return iup.text{
     spin="yes", spinmax=max, spinmin=min,
+    value=vars[var], --spinvalue=vars[var],
     action=update, spin_cb=update
   }
 end
@@ -56,7 +57,7 @@ end
 
 function azsm3c:multilevel(format, levels, low, high)
   local function spin(level)
-    return self:spin(string.format(format,levels), low, high)
+    return self:spin(string.format(format,level), low, high)
   end
 
   local args={}
@@ -97,6 +98,7 @@ function azsm3c:color(format)
 
     return iup.text{
       spin="yes", spinmax=255, spinmin=0,
+      value=c[channel], --spinvalue=c[channel],
       action=update, spin_cb=update
     }
   end

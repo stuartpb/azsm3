@@ -1,8 +1,9 @@
 local iup = require "iuplua"
+local manifestio = require "manifestio"
 local azsm3controls = require "azsm3controls"
 
 --The Atom Zombie Smasher manifest variables.
-local vars = {}
+local vars = manifestio.read()
 
 --Create a new control context with these variables.
 local ctrl = azsm3controls.new(vars)
