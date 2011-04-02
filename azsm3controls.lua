@@ -13,7 +13,7 @@ function azsm3c:text(var)
   local vars=self.vars
   return iup.text{
     expand="horizontal",
-    value=vars[var],
+    value=vars[var], tip=var,
     action=function(self) vars[var]=self.value end
   }
 end
@@ -23,7 +23,7 @@ function azsm3c:description(var)
   return iup.text{
     expand="yes",
     multiline="yes",
-    value=vars[var],
+    value=vars[var], tip=var,
     action=function(self) vars[var]=self.value end
   }
 end
@@ -34,7 +34,7 @@ function azsm3c:spin(var, max, min)
 
   return iup.text{
     spin="yes", spinmax=max, spinmin=min,
-    value=vars[var], --spinvalue=vars[var],
+    tip=var, value=vars[var], --spinvalue=vars[var],
     action=update, spin_cb=update
   }
 end
@@ -87,33 +87,56 @@ function azsm3c:color(format)
   local preview=iup.canvas{
     bgcolor=colorstring(), rastersize="20x20", expand="no"}
 
-  local function spin(channel)
+  local spins={}
+
+  local function getcolor()
+    local function update(channel,value)
+      c[channel] = value
+      vars[varchan(channel)] = value
+      spins[channel].value = value
+    end
+    local r,g,b = iup.GetColor(iup.CURRENT,iup.CURRENT,c.R,c.G,c.B)
+    if r and g and b then
+      update('R',r)
+      update('G',g)
+      update('B',b)
+      preview.bgcolor = colorstring()
+    end
+  end
+
+  function preview:button_cb(but,pressed)
+    if but==iup.BUTTON1 and pressed==0 then
+      getcolor()
+    end
+  end
+
+  local function makespin(channel)
     local var = varchan(channel)
     local function update(self)
-      local val = tonumber(self.value)
-      c[channel] = val
-      vars[var] = val
+      local value = self.value
+      c[channel] = value
+      vars[var] = value
       preview.bgcolor = colorstring()
     end
 
-    return iup.text{
+    spins[channel]=iup.text{
       spin="yes", spinmax=255, spinmin=0,
-      value=c[channel], --spinvalue=c[channel],
+      tip=var, value=c[channel], --spinvalue=c[channel],
       action=update, spin_cb=update
     }
   end
 
-  local rspin=spin'R'
-  local gspin=spin'G'
-  local bspin=spin'B'
+  makespin'R'
+  makespin'G'
+  makespin'B'
 
   return iup.hbox{
     iup.label{title="R:"},
-    rspin,
+    spins.R,
     iup.label{title="G:"},
-    gspin,
+    spins.G,
     iup.label{title="B:"},
-    bspin,
+    spins.B,
     preview
   }
 end

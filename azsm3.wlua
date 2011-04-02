@@ -17,7 +17,9 @@ local function tabpairs(t)
   return iup.tabs(targs)
 end
 
-local dlg = iup.dialog{rastersize="400x600",
+local dlg = iup.dialog{
+  title="Atom Zombie Smasher, MMM!",
+  rastersize="400x600";
   tabpairs{
     {"General",
       iup.vbox{
