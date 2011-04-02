@@ -10,4 +10,5 @@ On Windows, you can get all this and more by installing [Lua for Windows](http:/
 Outside of Windows, check your local package manager (which will most likely have packages for Lua) and/or Sourceforge (there are some good tips out there for setting up the files you can get from Sourceforge if you search for them).
 
 # More Info
-Read the comments, that's good stuff.
+
+Not finished (as in "displays all variables and can save and load files") yet.
