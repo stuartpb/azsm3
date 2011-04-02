@@ -2,6 +2,13 @@ local iup = require "iuplua"
 local cd = require "cdlua"
 require "iupluacd"
 
+--imports the Controls Library, with its fancy controls.
+--Among other things, this makes the Color dialog
+--(used by iup.GetColor) use IUP's ColorBrowser control instead
+--of the built-in OS one.
+--To use the OS color dialog, comment out this line.
+require "iupluacontrols"
+
 local azsm3c = {}
 local meta={__index=azsm3c}
 
