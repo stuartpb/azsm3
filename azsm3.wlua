@@ -43,10 +43,13 @@ local dlg = iup.dialog{
         ctrl:minmax("%sBUILDINGHEIGHT"),
         iup.label{title="Building health:"},
         ctrl:minmax("GAME_BLD_%sHEALTH"),
+        --To add: park variables
+        --Io add: extended outbreak levels
         iup.label{title="City population at outbreak level:"},
         ctrl:multilevel("CITYPOP_LVL%i",3),
         iup.label{title="Scientist population at outbreak level:"},
         ctrl:multilevel("SCIPOP_LVL%i",3),
+        --To add: starting scientists
         iup.hbox{
           iup.label{title="Maximum number of territories:"},
           ctrl:spin("GEO_MAXCITIES"),
@@ -131,6 +134,7 @@ local dlg = iup.dialog{
         ctrl:valspin("ALTERNATE_SPAWN_CHANCE",0,100),
         iup.label{title="Alternate zombie count:"},
         ctrl:minmax("ALTERNATE_SPAWN_AMOUNT_%s"),
+        --To add: epidemic alternate zombie spawning
       }--vbox
     },--Zombie Spawning
     {"Day/Night Cycle",
@@ -164,11 +168,44 @@ local dlg = iup.dialog{
           iup.label{title="Long:"},
           ctrl:spin("VICTORYPOINTS_LONG",0,100000),
         },
-
+        iup.label{title="Survivor value per outbreak level:"},
+        ctrl:valspin("GAME_OUTBREAK_POINTMOD",.25,2),
+        iup.label{title="Extra rescues needed for:"},
+        iup.hbox{
+          iup.label{title="Gold:"},
+          ctrl:spin("GOLDMEDALTHRESHOLD",0,150),
+          iup.label{title="Silver:"},
+          ctrl:spin("SILVERMEDALTHRESHOLD",0,150),
+        },
+        iup.label{title="Time threshhold in assault missions for:"},
+        iup.hbox{
+          iup.label{title="Gold:"},
+          ctrl:spin("ASSAULTGOLDTIME",0,150),
+          iup.label{title="Silver:"},
+          ctrl:spin("ASSAULTSILVERTIME",0,150),
+        },
+        iup.label{title="Assault mission rewards:"},
+        iup.hbox{
+          iup.label{title="Scientists:"},
+          ctrl:spin("GAME_ASSAULTSCIENTISTREWARD",0,150),
+          iup.label{title="Points:"},
+          ctrl:spin("GAME_ASSAULT_VP_REWARD",0,150),
+        },
       }--vbox
     },--Scoring
-
-  }
+    {"Explosive Buildings",
+      iup.vbox{
+        iup.label{title="Explosive building blast radius:"},
+        ctrl:valspin("GAME_EXPLOSIVEBUILDING_RADIUS",0,30),
+        iup.label{title="Explosive building blast damage:"},
+        ctrl:valspin("GAME_EXPLOSIVEBUILDING_DAMAGE",0,250),
+        iup.label{title="Explosive buildings in the city:"},
+        ctrl:minmax("GAME_EXPLOSIVEBUILDING_%s",0,20),
+        iup.label{title="Health modifier:"},
+        ctrl:valspin("GAME_EXPLOSIVEBUILDING_HEALTHMOD",0,1),
+      }--vbox
+    },--Explosive Buildings
+  }--tabpairs
 }
 
 dlg:show()
